@@ -20,7 +20,7 @@ app.post('/api/telemetry', async (req, res) => {
 
     // Verify device exists
     const device = await pool.query(
-      'SELECT * FROM devices WHERE device_id = $1',
+      'SELECT * FROM devices WHERE id = $1',
       [deviceId]
     );
 
@@ -30,7 +30,7 @@ app.post('/api/telemetry', async (req, res) => {
 
     // Insert telemetry data
     const result = await pool.query(
-      'INSERT INTO telemetry (device_id, timestamp, energy_watts) VALUES ($1, $2, $3) RETURNING *',
+      'INSERT INTO telemetry_data (device_id, timestamp, energy_consumed, power_usage) VALUES ($1, $2, $3, $3) RETURNING *',
       [deviceId, timestamp, energyWatts]
     );
 
@@ -51,9 +51,9 @@ app.get('/api/telemetry', async (req, res) => {
     const { deviceId, startDate, endDate, limit = 100 } = req.query;
 
     let query = `
-      SELECT t.*, d.device_name 
-      FROM telemetry t 
-      JOIN devices d ON t.device_id = d.device_id 
+      SELECT t.*, d.name as device_name 
+      FROM telemetry_data t 
+      JOIN devices d ON t.device_id = d.id 
       WHERE 1=1
     `;
     const params = [];
@@ -97,7 +97,7 @@ app.get('/api/telemetry', async (req, res) => {
 app.get('/api/devices', async (req, res) => {
   try {
     const result = await pool.query(
-      'SELECT d.*, u.username FROM devices d LEFT JOIN users u ON d.user_id = u.id ORDER BY d.device_name'
+      'SELECT * FROM devices ORDER BY name'
     );
 
     res.json({
@@ -120,13 +120,13 @@ app.get('/api/devices/:deviceId/stats', async (req, res) => {
     const stats = await pool.query(`
       SELECT 
         COUNT(*) as total_readings,
-        AVG(energy_watts) as avg_watts,
-        MIN(energy_watts) as min_watts,
-        MAX(energy_watts) as max_watts,
-        SUM(energy_watts) as total_watts,
+        AVG(energy_consumed) as avg_watts,
+        MIN(energy_consumed) as min_watts,
+        MAX(energy_consumed) as max_watts,
+        SUM(energy_consumed) as total_watts,
         DATE_TRUNC('day', timestamp) as day,
-        SUM(energy_watts) as daily_watts
-      FROM telemetry 
+        SUM(energy_consumed) as daily_watts
+      FROM telemetry_data 
       WHERE device_id = $1 
         AND timestamp >= NOW() - INTERVAL '${days} days'
       GROUP BY DATE_TRUNC('day', timestamp)
@@ -136,11 +136,11 @@ app.get('/api/devices/:deviceId/stats', async (req, res) => {
     const summary = await pool.query(`
       SELECT 
         COUNT(*) as total_readings,
-        AVG(energy_watts) as avg_watts,
-        MIN(energy_watts) as min_watts,
-        MAX(energy_watts) as max_watts,
-        SUM(energy_watts) as total_watts
-      FROM telemetry 
+        AVG(energy_consumed) as avg_watts,
+        MIN(energy_consumed) as min_watts,
+        MAX(energy_consumed) as max_watts,
+        SUM(energy_consumed) as total_watts
+      FROM telemetry_data 
       WHERE device_id = $1 
         AND timestamp >= NOW() - INTERVAL '${days} days'
     `, [deviceId]);

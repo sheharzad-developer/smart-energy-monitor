@@ -19,9 +19,14 @@
     "build:frontend": "cd frontend && npm run build",
     "start": "npm run start:frontend",
     "start:frontend": "cd frontend && npm start",
+    "db:init": "node scripts/init-db.js",
     "install:all": "npm install && cd frontend && npm install && cd ../auth && npm install && cd ../telemetry && npm install && cd ../ai && npm install",
     "clean": "rm -rf node_modules frontend/node_modules auth/node_modules telemetry/node_modules ai/node_modules",
     "lint": "cd frontend && npm run lint"
+  },
+  "dependencies": {
+    "pg": "^8.11.3",
+    "dotenv": "^16.0.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
