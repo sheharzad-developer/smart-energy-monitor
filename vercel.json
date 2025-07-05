@@ -13,18 +13,29 @@
   ],
   "routes": [
     {
+      "src": "/api/auth/(.*)",
+      "dest": "/api/auth/$1"
+    },
+    {
+      "src": "/api/telemetry/(.*)",
+      "dest": "/api/telemetry/$1"
+    },
+    {
+      "src": "/api/ai/(.*)",
+      "dest": "/api/ai/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }
   ],
-  "env": {
-    "AUTH_SERVICE_URL": "https://your-auth-service-url.com",
-    "TELEMETRY_SERVICE_URL": "https://your-telemetry-service-url.com", 
-    "AI_SERVICE_URL": "https://your-ai-service-url.com"
-  },
   "functions": {
-    "frontend/app/**": {
+    "frontend/pages/api/**": {
       "maxDuration": 30
     }
+  },
+  "env": {
+    "DATABASE_URL": "@database-url",
+    "JWT_SECRET": "@jwt-secret"
   }
 } 
