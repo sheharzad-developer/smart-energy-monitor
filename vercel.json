@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/next",
+      "config": {
+        "projectSettings": {
+          "framework": "nextjs"
+        }
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ],
+  "env": {
+    "AUTH_SERVICE_URL": "https://your-auth-service-url.com",
+    "TELEMETRY_SERVICE_URL": "https://your-telemetry-service-url.com", 
+    "AI_SERVICE_URL": "https://your-ai-service-url.com"
+  },
+  "functions": {
+    "frontend/app/**": {
+      "maxDuration": 30
+    }
+  }
+} 

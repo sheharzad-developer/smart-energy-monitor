@@ -1,0 +1,21 @@
+{
+  "name": "telemetry",
+  "version": "1.0.0",
+  "description": "Telemetry service for smart energy monitor",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["telemetry", "energy", "iot"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.1",
+    "pg": "^8.16.3"
+  }
+} 

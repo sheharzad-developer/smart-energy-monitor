@@ -1,0 +1,47 @@
+{
+  "name": "smart-energy-monitor",
+  "version": "1.0.0",
+  "description": "Smart Energy Monitor - A comprehensive IoT energy monitoring system with AI-powered analytics",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "auth",
+    "telemetry", 
+    "ai"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:auth\" \"npm run dev:telemetry\" \"npm run dev:ai\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:auth": "cd auth && npm start",
+    "dev:telemetry": "cd telemetry && npm start", 
+    "dev:ai": "cd ai && npm start",
+    "build": "npm run build:frontend",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "npm run start:frontend",
+    "start:frontend": "cd frontend && npm start",
+    "install:all": "npm install && cd frontend && npm install && cd ../auth && npm install && cd ../telemetry && npm install && cd ../ai && npm install",
+    "clean": "rm -rf node_modules frontend/node_modules auth/node_modules telemetry/node_modules ai/node_modules",
+    "lint": "cd frontend && npm run lint"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/smart-energy-monitor.git"
+  },
+  "keywords": [
+    "energy-monitoring",
+    "iot",
+    "artificial-intelligence", 
+    "real-time-analytics",
+    "smart-home",
+    "sustainability"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+} 
