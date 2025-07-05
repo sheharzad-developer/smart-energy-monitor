@@ -11,10 +11,13 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "axios": "^1.6.0",
+    "bcrypt": "^5.1.1",
     "chart.js": "^4.4.0",
     "clsx": "^2.0.0",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.294.0",
     "next": "14.0.0",
+    "pg": "^8.11.3",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0"
